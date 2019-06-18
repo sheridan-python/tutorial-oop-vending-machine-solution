@@ -21,7 +21,7 @@ share common properties to the abstracts coins and products.
 
 We must also model our vending machine and define actions on it:
 - `+ insert_coin(coin: Coin)`
-- `+ buy_product(product: str) -> Product`
+- `+ buy_product(product: type) -> Product`
 - `+ get_balance() -> int`
 - `+ get_change() -> List[Coin]`
 
@@ -108,7 +108,7 @@ parent class(es) as arguments.
 | `coins: List[Coin]`                           |
 | `purchases: List[Product]`                    |
 | `insert_coin(coin: Coin)`                     |
-| `buy_product(product: str) -> Product`        |
+| `buy_product(product: type) -> Product`       |
 | `get_balance() -> int`                        |
 | `get_change() -> List[Coin]`                  |
 
@@ -121,10 +121,21 @@ parent class(es) as arguments.
 - When the function insert_coin() is called, store the inserted coin a list on
   the object
 
-### .buy_product(product: str) -> Product
+### .buy_product(product: type) -> Product
 
-- The product argument may be one of the following values: "drink", "candy",
-  "chips". Any other value should raise a `ValueError` exception.
+- The product argument may be one of the following types: `Drink`, `Candy`,
+  or `Chips`, but be flexible enough to accept other `Product` types. Any other
+  value should raise a `ValueError` exception. Note: these are the `Product`
+  classes we've defined, and **not their instances**.
+
+  E.g.
+  ```python
+  machine = VendingMachine()
+  machine.buy_product(products.Drink)  # Good: This is a type
+  machine.buy_product(products.Drink())  # Bad: This is an instance
+  ```
+
+  This is the same difference as the type `int` and the instance `int()`
 
 - If the vending machine balance is less than the cost of the product, a
   custom exception called `InsufficientFunds` should be raised.
