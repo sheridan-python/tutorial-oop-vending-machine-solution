@@ -1,6 +1,6 @@
 # Vending machine – Take 2: Using OOP
 
-This tutorial revists a previous example and uses object-oriented programming
+This tutorial revisits a previous example and uses object-oriented programming
 paradigms to represent the concepts related to a vending machine. We will see
 how classes and objects will help us better represent the "real world" and help
 us track state:
@@ -11,21 +11,18 @@ Let's begin by designing our vending machine by modelling different objects.
 First, we have:
 - Coins
 - Products
-- DollarAmount
+- Vending Machine
 
 We can consider these as abstract classes / concepts. In practise, we have
 specific coins like quarters, loonies & toonies. For products, we have chips,
 candy and drinks – these could be broken down further into specific products
-like "355ml Coca-Cola can". These are considered concrete classes which all share
-common properties to the abstracts coins and products.
-
-Money in this case is a subclass of the python Decimal class and is used to
-represent a dollar amount. It is already provided as part of the boilerplate.
+like "355ml Coca-Cola can". These are considered concrete classes which all
+share common properties to the abstracts coins and products.
 
 We must also model our vending machine and define actions on it:
 - `+ insert_coin(coin: Coin)`
 - `+ buy_product(product: str) -> Product`
-- `+ get_balance() -> Money`
+- `+ get_balance() -> int`
 - `+ get_change() -> List[Coin]`
 
 
@@ -35,38 +32,42 @@ We must also model our vending machine and define actions on it:
 
 | **Coin**                  |
 | -                         |
-| `value: DollarAmount`     |
+| `value: int`     |
 | `label: str`              |
 | `str() -> str`            |
 
 
-| **FiveCent(Coin)**    |                        |
+The following classes inherit from the parent `Coin` class. Inheritance is
+achieved by providing parentheses around the class definition and providing the
+parent class(es) as arguments.
+
+| **Nickel(Coin)**    |                        |
 | -                     | -                      |
-| value                 | `DollarAmount('0.05')` |
+| value                 | `5` |
 | `str()` | `'5¢'`|
 
 
-| **TenCent(Coin)**     |                        |
+| **Dime(Coin)**     |                        |
 | -                     | -                      |
-| value                 | `DollarAmount('0.10')` |
+| value                 | `10` |
 | `str()`               | `'10¢'`                |
 
 
 | **Quarter(Coin)**     |                       |
 | -                     | -                     |
-| value                 | `DollarAmount('0.25')`|
+| value                 | `25`|
 | `str()`               | `'25¢'`               |
 
 
 | **Loonie(Coin)**      |                       |
 | -                     | -                     |
-| value                 | `DollarAmount('1.00')`|
+| value                 | `100`|
 | `str()`               | `'$1'`                |
 
 
 | **Toonie(Coin)**      |                       |
 | -                     | -                     |
-| value                 | `DollarAmount('2.00')`|
+| value                 | `200`|
 | `str()`               | `'$2'`                |
 
 
@@ -75,34 +76,41 @@ We must also model our vending machine and define actions on it:
 | **Product**           |
 | ---                   |
 | `name: str`           |
-| `price: DollarAmount` |
+| `price: int` |
+| `str() -> str`        |
 
 
 | **Chips(Product)**    |                       |
 | -                     | -                     |
 | `name`                | `'Chips'`             |
-| `price`               | `DollarAmount('2.25')`|
+| `price`               | `225`                 |
+| `str() -> str`        | `Chips: $2.25`        |
 
 
 | **Drink(Product)**    |                       |
 | -                     | -                     |
 | `name`                | `'Drink'`             |
-| `price`               | `DollarAmount('2.75')`|
+| `price`               | `275`                 |
+| `str() -> str`        | `Drink: $2.75`        |
 
 
 | **Candy(Product)**    |                        |
 | -                     | -                      |
 | `name`                | `'Candy'`              |
+| `price`               | `315`                  |
+| `str()`               | `Candy: $3.15`         |
 
 
 
 #### Vending Machine
-| **VendingMachine**                        |
-| -                                         |
-| - `+ insert_coin(coin: Coin)`             |
-| - `+ buy_product(product: str) -> Product`|
-| - `+ get_balance() -> Money`              |
-| - `+ get_change() -> List[Coin]`          |
+| **VendingMachine**                            |
+| -
+| `coins: List[Coin]`                           |
+| `purchases: List[Product]`                    |
+| `insert_coin(coin: Coin)`                     |
+| `buy_product(product: str) -> Product`        |
+| `get_balance() -> int`                        |
+| `get_change() -> List[Coin]`                  |
 
 
 
@@ -125,7 +133,7 @@ We must also model our vending machine and define actions on it:
   the purchase should be added to a list of purchases on the object.
 
 
-### .get_balance() -> Money
+### .get_balance() -> int
 
 - The get_balance function should return the sum of inserted coins minus the
   sum of the price of purchased products.
