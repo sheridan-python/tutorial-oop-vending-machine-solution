@@ -138,6 +138,12 @@ parent class(es) as arguments.
 - The get_balance function should return the sum of inserted coins minus the
   sum of the price of purchased products.
 
+- Scenario: when no coins are inserted, and no purchases have been made, the
+  balance should be zero.
+
+- Scenario: given that two toonies are inserted into the machine and a candy
+  bar was purchased, the method should return 75.
+
 
 ### .get_change() -> List[Coin]
 
@@ -153,3 +159,22 @@ parent class(es) as arguments.
 
 - The list of inserted coins & purchased products should be cleared
   (get_balance should be zero)
+
+- Scenarios:
+
+    - When the balance is 0, no quarters should be returned
+    - When the balance is 25, a quarter should be returned
+    - When the balance is 400, two toonies should be returned
+    - When the balance is 300, a toonie and loonie should be returned
+    - When the balance is 265, a toonie, two quarters, a dime and a nickel
+      should be returned
+    - When the balance is 7, a nickel should be returned
+    - When the balance is negative, nothing should be returned
+
+
+# Solving
+
+- Begin by building the Coin classes, followed by the Product. Starter tests
+  have already been provided for these classes.
+- Start writing tests for the VendingMachine methods, in the order defined
+  above.
