@@ -1,3 +1,3 @@
 [pylintrc]
 # R0903: too few many public methods
-disable=R0903,missing-docstring
+disable=R0903,missing-docstring,E1101,E1133
